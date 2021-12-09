@@ -2,6 +2,7 @@
 
   <div style="height: 500px; width: 100%">
     <div style="height: 200px; overflow: auto;">
+      <p>received coords: {{ latFrom}}, {{ lngFrom }}</p>
       <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
       <button @click="showLongText">
@@ -27,11 +28,9 @@
       <l-marker :lat-lng="withPopup">
         <l-popup>
           <div @click="innerClick">
-            I am a popup
+            пункт отправления
             <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
+              текст открытки
             </p>
           </div>
         </l-popup>
@@ -39,11 +38,9 @@
       <l-marker :lat-lng="withTooltip">
         <l-tooltip :options="{ permanent: true, interactive: true }">
           <div @click="innerClick">
-            I am a tooltip
+            пункт назначения
             <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
+              текст
             </p>
           </div>
         </l-tooltip>
@@ -55,6 +52,7 @@
 <script>
 import {latLng} from "leaflet";
 import {LMap, LTileLayer, LMarker, LPopup, LTooltip} from "vue2-leaflet";
+import ky from 'ky';
 
 export default {
   name: "Map",
@@ -67,15 +65,19 @@ export default {
   },
   data() {
     return {
-      zoom: 13,
-      center: latLng(47.41322, -1.219482),
+      latFrom: null,
+      lngFrom: null,
+      latTo: null,
+      lngTo: null,
+      zoom: 6,
+      center: latLng(this.latFrom, this.lngFrom),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(47.41322, -1.219482),
-      withTooltip: latLng(47.41422, -1.250482),
+      withPopup: latLng(this.latFrom, this.lngFrom),
+      withTooltip: latLng(this.latTo, this.lngTo),
       currentZoom: 11.5,
-      currentCenter: latLng(47.41322, -1.219482),
+      currentCenter: latLng(this.latFrom, this.lngFrom),
       showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
@@ -96,6 +98,17 @@ export default {
     innerClick() {
       alert("Click!");
     }
+  },
+  async created() {
+    const postcardResponse = await ky.get("http://localhost:8000/postcards/51").json();
+    // TODO filter data without coords on backend
+    this.latTo = +postcardResponse["lat_to"];
+    this.lngTo = +postcardResponse["lng_to"];
+    this.latFrom = +postcardResponse["lat_from"];
+    this.lngFrom = +postcardResponse["lng_from"];
+    this.withPopup = latLng(this.latTo, this.lngTo);
+    this.withTooltip = latLng(this.latFrom, this.lngFrom);
+    this.center = latLng(this.latFrom, this.lngFrom);
   }
 };
 </script>

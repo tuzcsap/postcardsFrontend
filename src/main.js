@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 
-import {LMap, LMarker, LTileLayer, LTooltip} from "vue2-leaflet";
+import {LMap, LMarker, LTileLayer, LTooltip, LPopup} from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
 
@@ -9,6 +9,7 @@ Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 Vue.component('l-tooltip', LTooltip);
+Vue.component('l-popup', LPopup);
 
 Vue.config.productionTip = false;
 
