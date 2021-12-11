@@ -100,8 +100,9 @@ export default {
     }
   },
   async created() {
-    const postcardResponse = await ky.get("http://localhost:8000/postcards/51").json();
+    const postcardResponse = await ky.get("http://127.0.0.1:8000/postcards/51").json();
     // TODO filter data without coords on backend
+    // new
     this.latTo = +postcardResponse["lat_to"];
     this.lngTo = +postcardResponse["lng_to"];
     this.latFrom = +postcardResponse["lat_from"];
