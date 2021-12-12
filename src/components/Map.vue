@@ -1,6 +1,6 @@
 <template>
 
-  <div style="height: 500px; width: 100%">
+  <div style="height: 500px; width: 80%">
     <div style="height: 200px; overflow: auto;">
       <p>received coords: {{ latFrom}}, {{ lngFrom }}</p>
       <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
