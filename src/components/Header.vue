@@ -26,7 +26,7 @@
 </template>
 
 <script>
-
+import ky from 'ky';
 
 export default {
   name: 'Header',
@@ -55,8 +55,11 @@ export default {
     };
   },
   methods: {
-    changeJobTitle (event) {
-      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text
+    async changeJobTitle (event) {
+      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text;
+      // TODO filter by location name
+      const response = await ky.get("http://127.0.0.1:8000/postcards/51").json();
+      console.log("OK", response);
     }
   }
 }
