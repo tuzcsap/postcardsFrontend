@@ -28,7 +28,6 @@
       <l-marker :lat-lng="withPopup">
         <l-popup>
           <div @click="innerClick">
-            пункт отправления
             <p v-show="showParagraph">
               текст открытки
             </p>
@@ -37,8 +36,11 @@
       </l-marker>
       <l-marker :lat-lng="withTooltip">
         <l-tooltip :options="{ permanent: true, interactive: true }">
-          <div @click="innerClick">
-            пункт назначения
+          <div @click="innerClick" class="popUps">
+            пункт отправления : {{ countryFrom}}
+            пункт прибытия : {{ counrtyTo}}
+            другой пункт отправления : {{ addressFrom}}
+            другой пункт прибытия : {{ addressTo}}
             <p v-show="showParagraph">
               текст
             </p>
@@ -69,6 +71,10 @@ export default {
       lngFrom: null,
       latTo: null,
       lngTo: null,
+      countryFrom: null,
+      countryTo: null,
+      addressFrom: null,
+      addressTo: null,
       zoom: 6,
       center: latLng(this.latFrom, this.lngFrom),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -107,9 +113,21 @@ export default {
     this.lngTo = +postcardResponse["lng_to"];
     this.latFrom = +postcardResponse["lat_from"];
     this.lngFrom = +postcardResponse["lng_from"];
+    this.countryFrom = +postcardResponse["country_from"];
+    this.countryTo = +postcardResponse["country_to"];
+    this.addressFrom = +postcardResponse["address_from"];
+    this.addressTo = +postcardResponse["address_to"];
     this.withPopup = latLng(this.latTo, this.lngTo);
     this.withTooltip = latLng(this.latFrom, this.lngFrom);
     this.center = latLng(this.latFrom, this.lngFrom);
   }
 };
 </script>
+
+<style>
+.popUps{
+  width: 100px;
+  height: 200px;
+}
+
+</style>
