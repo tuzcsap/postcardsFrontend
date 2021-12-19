@@ -62,7 +62,6 @@
 import {latLng} from "leaflet";
 import {LMap, LTileLayer, LMarker, LPopup, LTooltip} from "vue2-leaflet";
 import ky from 'ky';
-
 export default {
   name: "Map",
   component: {

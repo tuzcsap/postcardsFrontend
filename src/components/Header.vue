@@ -1,19 +1,19 @@
 <template>
   <div class="nav">
     <div  class="dlist">
-      <select class="form-control" @change="changeJobTitle($event)">
+      <select class="form-control" @change="cityFrom($event)">
         <option value="" selected disabled>Откуда</option>
         <option v-for="cit in city" :value="cit.id" :key="cit.id">{{ cit.name }}</option>
       </select>
     </div>
     <div  class="dlist">
-      <select class="form-control" @change="changeJobTitle($event)">
+      <select class="form-control" @change="cityTo($event)">
         <option value="" selected disabled>Куда</option>
         <option v-for="cit in city" :value="cit.id" :key="cit.id">{{ cit.name }}</option>
       </select>
     </div>
     <div  class="dlist">
-      <select class="form-control" @change="changeJobTitle($event)">
+      <select class="form-control" @change="timePeriod($event)">
         <option value="" selected disabled>Период времени</option>
         <option v-for="perio in period" :value="perio.id" :key="perio.id">{{ perio.name }}</option>
       </select>
@@ -55,11 +55,23 @@ export default {
     };
   },
   methods: {
-    async changeJobTitle (event) {
+    async cityFrom (event) {
       this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text;
       // TODO filter by location name
       const response = await ky.get("http://127.0.0.1:8000/postcards/51").json();
-      console.log("OK", response);
+      console.log("OK", response, String(response.address_from));
+    },
+    async cityTo (event) {
+      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text;
+      // TODO filter by location name
+      const response = await ky.get("http://127.0.0.1:8000/postcards/51").json();
+      console.log("OK", response, String(response.address_to));
+    },
+    async timePeriod (event) {
+      this.selectedJobTitle = event.target.options[event.target.options.selectedIndex].text;
+      // TODO filter by period name
+      const response = await ky.get("http://127.0.0.1:8000/postcards/51").json();
+      console.log("OK", response, String(response.time_period));
     }
   }
 }
