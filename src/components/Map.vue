@@ -3,14 +3,9 @@
   <div style="height: 500px; width: 80%">
     <div style="height: 200px; overflow: auto;">
       <p>received coords: {{ latFrom}}, {{ lngFrom }}</p>
-      <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
+      <p>First marker is placed at {{ postcardFrom.lat }}, {{ postcardTo.lng }}</p>
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-      <button @click="showLongText">
-        Toggle long popup
-      </button>
-      <button @click="showMap = !showMap">
-        Toggle map
-      </button>
+
     </div>
     <l-map
         v-if="showMap"
@@ -25,7 +20,21 @@
           :url="url"
           :attribution="attribution"
       />
-      <l-marker :lat-lng="withPopup">
+      <l-marker
+        v-for="marker in markersFrom"
+        :key="marker.id"
+        :visible="marker.visible"
+      >
+        <l-popup :content="marker-tooltip" />
+      </l-marker>
+      <l-marker
+        v-for="marker in markersTo"
+        :key="marker.id"
+        :visible="marker.visible"
+      >
+        <l-popup :content="marker-tooltip" />
+      </l-marker>
+      <l-marker :lat-lng="postcardFrom">
         <l-popup>
           <div @click="innerClick">
             <p v-show="showParagraph">
@@ -45,7 +54,7 @@
               текст
             </p>
           </div>
-        </l-tooltip>
+        </l-popup>
       </l-marker>
     </l-map>
   </div>
@@ -71,17 +80,22 @@ export default {
       lngFrom: null,
       latTo: null,
       lngTo: null,
+<<<<<<< HEAD
       countryFrom: null,
       countryTo: null,
       addressFrom: null,
       addressTo: null,
+=======
+      markersTo: null,
+      markersFrom: null,
+>>>>>>> 987bec87ee2e044b8b2db8d2522fc6cc9e33b271
       zoom: 6,
       center: latLng(this.latFrom, this.lngFrom),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(this.latFrom, this.lngFrom),
-      withTooltip: latLng(this.latTo, this.lngTo),
+      postcardFrom: latLng(this.latFrom, this.lngFrom),
+      postcardTo: latLng(this.latTo, this.lngTo),
       currentZoom: 11.5,
       currentCenter: latLng(this.latFrom, this.lngFrom),
       showParagraph: false,
@@ -101,24 +115,30 @@ export default {
     showLongText() {
       this.showParagraph = !this.showParagraph;
     },
-    innerClick() {
-      alert("Click!");
-    }
   },
   async created() {
     const postcardResponse = await ky.get("http://127.0.0.1:8000/postcards/51").json();
+    const randomPostcardsResponse = await ky.get("http://127.0.0.1:8000/randompostcards").json();
+    console.log(randomPostcardsResponse);
+    // console.log(randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to)));
+    this.markersTo = randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to));
+    this.markersFrom = randomPostcardsResponse.map(p => latLng(p.lat_from, p.lng_from));
     // TODO filter data without coords on backend
-    // new
     this.latTo = +postcardResponse["lat_to"];
     this.lngTo = +postcardResponse["lng_to"];
     this.latFrom = +postcardResponse["lat_from"];
     this.lngFrom = +postcardResponse["lng_from"];
+<<<<<<< HEAD
     this.countryFrom = +postcardResponse["country_from"];
     this.countryTo = +postcardResponse["country_to"];
     this.addressFrom = +postcardResponse["address_from"];
     this.addressTo = +postcardResponse["address_to"];
     this.withPopup = latLng(this.latTo, this.lngTo);
     this.withTooltip = latLng(this.latFrom, this.lngFrom);
+=======
+    this.postcardTo = latLng(this.latTo, this.lngTo);
+    this.postcardFrom = latLng(this.latFrom, this.lngFrom);
+>>>>>>> 987bec87ee2e044b8b2db8d2522fc6cc9e33b271
     this.center = latLng(this.latFrom, this.lngFrom);
   }
 };

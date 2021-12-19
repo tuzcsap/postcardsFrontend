@@ -22,3 +22,7 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+```
+docker run -it -p 8080:80 --rm --name postcardsfrontend postcardsfrontend
+``` 
