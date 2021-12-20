@@ -2,13 +2,15 @@
 
   <div style="height: 500px; width: 80%">
     <div style="height: 200px; overflow: auto;">
-      <p>received coords: {{ latFrom}}, {{ lngFrom }}</p>
-      <p>First marker is placed at {{ postcardFrom.lat }}, {{ postcardTo.lng }}</p>
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-
+<!--      <p-->
+<!--          v-for="postcard in postcards"-->
+<!--          :key="postcard.id"-->
+<!--      >-->
+<!--        {{ `${postcard.lat_from}, ${postcard.lng_from}` }}-->
+<!--      </p>-->
     </div>
     <l-map
-        v-if="showMap"
         :zoom="zoom"
         :center="center"
         :options="mapOptions"
@@ -21,38 +23,28 @@
           :attribution="attribution"
       />
       <l-marker
-        v-for="marker in markersFrom"
-        :key="marker.id"
-        :visible="marker.visible"
+          v-for="postcard in postcards"
+          :key="postcard.id + 'from'"
+          :lat-lng="postcard.coords_from"
       >
-        <l-popup :content="marker-tooltip" />
+        <l-icon
+          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png"
+        >
+        </l-icon>
+        <l-popup>
+          <img :src="postcard.url_front">
+        </l-popup>
       </l-marker>
       <l-marker
-        v-for="marker in markersTo"
-        :key="marker.id"
-        :visible="marker.visible"
+          v-for="postcard in postcards"
+          :key="postcard.id + 'to'"
+          :lat-lng="postcard.coords_to"
       >
-        <l-popup :content="marker-tooltip" />
-      </l-marker>
-      <l-marker :lat-lng="postcardFrom">
-        <l-popup>
-          <div>
-            пункт отправления
-            <p>
-              текст открытки
-            </p>
-          </div>
-        </l-popup>
-      </l-marker>
-      <l-marker :lat-lng="postcardTo">
-        <l-popup>
-          <div>
-            пункт назначения
-            <p v-show="showParagraph">
-              текст
-            </p>
-          </div>
-        </l-popup>
+        <l-icon
+          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png"
+        >
+        </l-icon>
+        <l-popup/>
       </l-marker>
     </l-map>
   </div>
@@ -60,7 +52,7 @@
 
 <script>
 import {latLng} from "leaflet";
-import {LMap, LTileLayer, LMarker, LPopup, LTooltip} from "vue2-leaflet";
+import {LMap, LTileLayer, LMarker, LPopup, LTooltip, LIcon} from "vue2-leaflet";
 import ky from 'ky';
 
 export default {
@@ -70,26 +62,21 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
-    LTooltip
+    LTooltip,
+    LIcon
   },
   data() {
     return {
-      latFrom: null,
-      lngFrom: null,
-      latTo: null,
-      lngTo: null,
-      markersTo: null,
-      markersFrom: null,
+      postcards: [],
       zoom: 6,
-      center: latLng(this.latFrom, this.lngFrom),
+      center: latLng(55.7504461, 37.6174943),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      postcardFrom: latLng(this.latFrom, this.lngFrom),
-      postcardTo: latLng(this.latTo, this.lngTo),
+      // postcardFrom: latLng(this.latFrom, this.lngFrom),
+      // postcardTo: latLng(this.latTo, this.lngTo),
       currentZoom: 11.5,
-      currentCenter: latLng(this.latFrom, this.lngFrom),
-      showParagraph: false,
+      currentCenter: this.center,
       mapOptions: {
         zoomSnap: 0.5
       },
@@ -102,26 +89,23 @@ export default {
     },
     centerUpdate(center) {
       this.currentCenter = center;
-    },
-    showLongText() {
-      this.showParagraph = !this.showParagraph;
-    },
+    }
   },
   async created() {
-    const postcardResponse = await ky.get("http://127.0.0.1:8000/postcards/51").json();
-    const randomPostcardsResponse = await ky.get("http://127.0.0.1:8000/randompostcards").json();
-    console.log(randomPostcardsResponse);
+    // const postcardResponse = await ky.get("http://127.0.0.1:3000/postcards/51").json();
+    const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
+    this.postcards = postcardsResponse.map(p => ({id: p.id, coords_from: latLng(p.lat_from, p.lng_from), coords_to: latLng(p.lat_to, p.lng_to), url_front: p.url_front}));
     // console.log(randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to)));
-    this.markersTo = randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to));
-    this.markersFrom = randomPostcardsResponse.map(p => latLng(p.lat_from, p.lng_from));
+    // this.markersTo = randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to));
+    // this.markersFrom = randomPostcardsResponse.map(p => latLng(p.lat_from, p.lng_from));
     // TODO filter data without coords on backend
-    this.latTo = +postcardResponse["lat_to"];
-    this.lngTo = +postcardResponse["lng_to"];
-    this.latFrom = +postcardResponse["lat_from"];
-    this.lngFrom = +postcardResponse["lng_from"];
-    this.postcardTo = latLng(this.latTo, this.lngTo);
-    this.postcardFrom = latLng(this.latFrom, this.lngFrom);
-    this.center = latLng(this.latFrom, this.lngFrom);
+    // this.latTo = +postcardResponse["lat_to"];
+    // this.lngTo = +postcardResponse["lng_to"];
+    // this.latFrom = +postcardResponse["lat_from"];
+    // this.lngFrom = +postcardResponse["lng_from"];
+    // this.postcardTo = latLng(this.latTo, this.lngTo);
+    // this.postcardFrom = latLng(this.latFrom, this.lngFrom);
+    // this.center = latLng(this.latFrom, this.lngFrom);
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <ListPost class="el"/>
+<!--    <ListPost class="el"/>-->
     <Map class="el"/>
   </div>
 </template>
@@ -9,14 +9,14 @@
 <script>
 import Map from "./components/Map.vue";
 import Header from "./components/Header.vue";
-import ListPost from "./components/ListPost.vue";
+// import ListPost from "./components/ListPost.vue";
 
 export default {
   name: 'App',
   components: {
     Map,
     Header,
-    ListPost
+    // ListPost
   }
 }
 </script>
