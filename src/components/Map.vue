@@ -37,8 +37,8 @@
               contain
           >
           </v-img>
-          <p>Откуда: {{postcard.address_from}}</p>
-          <p>Куда: {{postcard.address_to}}</p>
+          <p>Откуда: {{ postcard.address_from }}</p>
+          <p>Куда: {{ postcard.address_to }}</p>
         </l-popup>
       </l-marker>
       <l-marker
@@ -56,8 +56,8 @@
               contain
           >
           </v-img>
-          <p>Откуда: {{postcard.address_from}}</p>
-          <p>Куда: {{postcard.address_to}}</p>
+          <p>Откуда: {{ postcard.address_from }}</p>
+          <p>Куда: {{ postcard.address_to }}</p>
         </l-popup>
       </l-marker>
     </l-map>
@@ -71,6 +71,7 @@ import ky from 'ky';
 
 export default {
   name: "Map",
+  props: ["postcards"],
   component: {
     LMap,
     LTileLayer,
@@ -81,14 +82,12 @@ export default {
   },
   data() {
     return {
-      postcards: [],
+      // postcards: [],
       zoom: 6,
       center: latLng(55.7504461, 37.6174943),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      // postcardFrom: latLng(this.latFrom, this.lngFrom),
-      // postcardTo: latLng(this.latTo, this.lngTo),
       currentZoom: 11.5,
       currentCenter: this.center,
       mapOptions: {
@@ -106,8 +105,7 @@ export default {
     }
   },
   async created() {
-    // const postcardResponse = await ky.get("http://127.0.0.1:3000/postcards/51").json();
-    const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
+    const postcardsResponse = await ky.get("http://127.0.0.1:8000/postcards").json();
     this.postcards = postcardsResponse.map(p => ({
       id: p.id,
       coords_from: latLng(p.lat_from, p.lng_from),
@@ -116,17 +114,6 @@ export default {
       address_from: p.address_from,
       address_to: p.address_to
     }));
-    // console.log(randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to)));
-    // this.markersTo = randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to));
-    // this.markersFrom = randomPostcardsResponse.map(p => latLng(p.lat_from, p.lng_from));
-    // TODO filter data without coords on backend
-    // this.latTo = +postcardResponse["lat_to"];
-    // this.lngTo = +postcardResponse["lng_to"];
-    // this.latFrom = +postcardResponse["lat_from"];
-    // this.lngFrom = +postcardResponse["lng_from"];
-    // this.postcardTo = latLng(this.latTo, this.lngTo);
-    // this.postcardFrom = latLng(this.latFrom, this.lngFrom);
-    // this.center = latLng(this.latFrom, this.lngFrom);
   }
 };
 </script>
