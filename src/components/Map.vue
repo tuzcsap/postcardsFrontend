@@ -3,12 +3,12 @@
   <div style="height: 500px; width: 80%">
     <div style="height: 200px; overflow: auto;">
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-<!--      <p-->
-<!--          v-for="postcard in postcards"-->
-<!--          :key="postcard.id"-->
-<!--      >-->
-<!--        {{ `${postcard.lat_from}, ${postcard.lng_from}` }}-->
-<!--      </p>-->
+      <!--      <p-->
+      <!--          v-for="postcard in postcards"-->
+      <!--          :key="postcard.id"-->
+      <!--      >-->
+      <!--        {{ `${postcard.lat_from}, ${postcard.lng_from}` }}-->
+      <!--      </p>-->
     </div>
     <l-map
         :zoom="zoom"
@@ -28,11 +28,17 @@
           :lat-lng="postcard.coords_from"
       >
         <l-icon
-          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png"
+            icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png"
         >
         </l-icon>
         <l-popup>
-          <img :src="postcard.url_front">
+          <v-img
+              :src="postcard.url_front"
+              contain
+          >
+          </v-img>
+          <p>Откуда: {{postcard.address_from}}</p>
+          <p>Куда: {{postcard.address_to}}</p>
         </l-popup>
       </l-marker>
       <l-marker
@@ -41,10 +47,18 @@
           :lat-lng="postcard.coords_to"
       >
         <l-icon
-          icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png"
+            icon-url="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png"
         >
         </l-icon>
-        <l-popup/>
+        <l-popup>
+          <v-img
+              :src="postcard.url_front"
+              contain
+          >
+          </v-img>
+          <p>Откуда: {{postcard.address_from}}</p>
+          <p>Куда: {{postcard.address_to}}</p>
+        </l-popup>
       </l-marker>
     </l-map>
   </div>
@@ -94,7 +108,14 @@ export default {
   async created() {
     // const postcardResponse = await ky.get("http://127.0.0.1:3000/postcards/51").json();
     const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
-    this.postcards = postcardsResponse.map(p => ({id: p.id, coords_from: latLng(p.lat_from, p.lng_from), coords_to: latLng(p.lat_to, p.lng_to), url_front: p.url_front}));
+    this.postcards = postcardsResponse.map(p => ({
+      id: p.id,
+      coords_from: latLng(p.lat_from, p.lng_from),
+      coords_to: latLng(p.lat_to, p.lng_to),
+      url_front: p.url_front,
+      address_from: p.address_from,
+      address_to: p.address_to
+    }));
     // console.log(randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to)));
     // this.markersTo = randomPostcardsResponse.map(p => latLng(p.lat_to, p.lng_to));
     // this.markersFrom = randomPostcardsResponse.map(p => latLng(p.lat_from, p.lng_from));

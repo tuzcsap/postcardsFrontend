@@ -5,16 +5,7 @@ import {LMap, LMarker, LTileLayer, LTooltip, LPopup, LIcon} from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Импортировать файлы CSS Bootstrap и Bootstrap Vue (порядок важен)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Сделайте BootstrapVue доступным для всего проекта
-Vue.use(BootstrapVue)
-// При желании установите плагин компонентов иконок BootstrapVue
-Vue.use(IconsPlugin)
+import vuetify from './plugins/vuetify'
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
@@ -34,5 +25,6 @@ L.Icon.Default.mergeOptions({
 })
 
 new Vue({
-    render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
