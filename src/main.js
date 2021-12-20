@@ -5,6 +5,8 @@ import {LMap, LMarker, LTileLayer, LTooltip, LPopup, LIcon} from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
 
+import LControlFullscreen from 'vue2-leaflet-fullscreen';
+
 import vuetify from './plugins/vuetify'
 
 Vue.component('l-map', LMap);
@@ -13,6 +15,7 @@ Vue.component('l-marker', LMarker);
 Vue.component('l-tooltip', LTooltip);
 Vue.component('l-popup', LPopup);
 Vue.component('l-icon', LIcon);
+Vue.component('l-control-fullscreen', LControlFullscreen);
 
 Vue.config.productionTip = false;
 

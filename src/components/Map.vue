@@ -1,15 +1,6 @@
 <template>
 
-  <div style="height: 500px; width: 80%">
-    <div style="height: 200px; overflow: auto;">
-      <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
-      <!--      <p-->
-      <!--          v-for="postcard in postcards"-->
-      <!--          :key="postcard.id"-->
-      <!--      >-->
-      <!--        {{ `${postcard.lat_from}, ${postcard.lng_from}` }}-->
-      <!--      </p>-->
-    </div>
+  <div style="height: 800px; width: 100%">
     <l-map
         :zoom="zoom"
         :center="center"
@@ -22,6 +13,7 @@
           :url="url"
           :attribution="attribution"
       />
+      <l-control-fullscreen position="topleft"/>
       <l-marker
           v-for="postcard in postcards"
           :key="postcard.id + 'from'"
@@ -39,6 +31,7 @@
           </v-img>
           <p>Откуда: {{ postcard.address_from }}</p>
           <p>Куда: {{ postcard.address_to }}</p>
+          <a :href="'https://sysblok.ru/postcards/card/' + postcard.id">Подробнее</a>
         </l-popup>
       </l-marker>
       <l-marker
@@ -58,6 +51,7 @@
           </v-img>
           <p>Откуда: {{ postcard.address_from }}</p>
           <p>Куда: {{ postcard.address_to }}</p>
+          <a :href="'https://sysblok.ru/postcards/card/' + postcard.id">Подробнее</a>
         </l-popup>
       </l-marker>
     </l-map>
@@ -105,7 +99,7 @@ export default {
     }
   },
   async created() {
-    const postcardsResponse = await ky.get("http://127.0.0.1:8000/postcards").json();
+    const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
     this.postcards = postcardsResponse.map(p => ({
       id: p.id,
       coords_from: latLng(p.lat_from, p.lng_from),

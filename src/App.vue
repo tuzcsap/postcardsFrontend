@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Header @updatePostcardList="updatePostcardList"/>
-    <!--    <ListPost class="el"/>-->
     <Map :postcards="postcards" class="el"/>
   </div>
 </template>
