@@ -6,7 +6,11 @@
         <option v-for="city in citiesFrom" :value="city.id" :key="city.id">{{ city.name }}</option>
       </select>
     </div>
-<!--    <v-select>-->
+<!--    <v-select-->
+<!--        @change="cityFrom($event)"-->
+<!--        :items="citiesFrom"-->
+<!--        item-text="name"-->
+<!--        item-value="name">-->
 <!--    </v-select>-->
     <div class="dlist">
       <select class="form-control" @change="cityTo($event)">
@@ -20,6 +24,10 @@
         <option v-for="perio in period" :value="perio.id" :key="perio.id">{{ perio.name }}</option>
       </select>
     </div>
+<!--    <v-btn @click="$emit('updatePostcardList',-->
+<!--          'Дореволюционные')"-->
+<!--    >Сбросить-->
+<!--    </v-btn>-->
     <v-btn @click="$emit('updatePostcardList',
           selectedPeriod,
           selectedCityFrom,
@@ -93,7 +101,7 @@ export default {
 }
 
 .nav {
-  background-color: #333;
+  background-color: #f6ffed;
   overflow: hidden
 }
 

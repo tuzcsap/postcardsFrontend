@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
-    <Header @updatePostcardList="updatePostcardList"/>
-    <Map :postcards="postcards" class="el"/>
-  </div>
+  <v-app>
+    <div id="app">
+      <Header @updatePostcardList="updatePostcardList"/>
+      <Map :postcards="postcards" class="el"/>
+    </div>
+  </v-app>
 </template>
 
 <script>
