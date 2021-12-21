@@ -99,7 +99,10 @@ export default {
     }
   },
   async created() {
-    const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
+    const uri = "http://127.0.0.1:8000/timeperiod?time_period=Дореволюционные"
+    const encoded = encodeURI(uri);
+    const postcardsResponse = await ky.get(encoded).json();
+    // const postcardsResponse = await ky.get("http://127.0.0.1:3000/postcards").json();
     this.postcards = postcardsResponse.map(p => ({
       id: p.id,
       coords_from: latLng(p.lat_from, p.lng_from),
