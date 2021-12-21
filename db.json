@@ -1,0 +1,88 @@
+{
+  "postcards": [
+    {
+      "id": 52,
+      "url_front": "https://forum.vgd.ru/file.php?fid=454524&key=1487734059",
+      "url_back": "https://forum.vgd.ru/file.php?fid=454523&key=622039376",
+      "text_language": "русский",
+      "date_written": "07.12.1910",
+      "address_from": "Одесса",
+      "name_from": "[отсутствует]",
+      "address_to": "Кавказ, Тифлис, Авчальская ул., д. 51",
+      "name_to": "Ол[ьга] Константиновна Карасева",
+      "date_sent": "07.12.1910",
+      "date_received": "xx.xx.xxxx",
+      "time_period": "Дореволюционные",
+      "country_from": "Российская империя",
+      "settlement_from": "Херсонская губерния, Одесский уезд, город Одесса",
+      "country_to": "Российская империя",
+      "settlement_to": "Тифлисская губерния, Тифлисский уезд, город Тифлис",
+      "original_pic_url_2": null,
+      "lat_from": "46.4873195",
+      "lng_from": "30.7392776",
+      "lat_to": "41.6934591",
+      "lng_to": "44.8014495",
+      "tags": [
+        "Просьба",
+        "Искусство",
+        "Шлю привет"
+      ]
+    },
+    {
+      "id": 51,
+      "url_front": "https://forum.vgd.ru/file.php?fid=454522&key=231157345",
+      "url_back": "https://forum.vgd.ru/file.php?fid=454521&key=510927720",
+      "text_language": "русский",
+      "date_written": "xx.xx.xxxx",
+      "address_from": "Москва",
+      "name_from": "М.Каневски",
+      "address_to": "Ростов на Дону, Летнее помещение коммерческого клуба, Симфонический оркестр Л.П.Штейнберга",
+      "name_to": "П. Перов ",
+      "date_sent": "xx.05.1910",
+      "date_received": "06.05.1910",
+      "time_period": "Дореволюционные",
+      "country_from": "Российская империя",
+      "settlement_from": "Московская губерния, Московский уезд, город Москва",
+      "country_to": "Российская империя",
+      "settlement_to": "Область Войска Донского, Ростовский уезд, город Ростов-на-Дону",
+      "original_pic_url_2": null,
+      "lat_from": "55.7504461",
+      "lng_from": "37.6174943",
+      "lat_to": "47.2213858",
+      "lng_to": "39.7114196",
+      "tags": [
+        "Просьба",
+        "Искусство",
+        "Шлю привет"
+      ]
+    },
+    {
+      "id": 67,
+      "url_front": "https://forum.vgd.ru/file.php?fid=448722&key=115525058",
+      "url_back": "https://forum.vgd.ru/file.php?fid=448723&key=723478146",
+      "text_language": "немецкий",
+      "date_written": "30.07.1901",
+      "address_from": "Одесса",
+      "name_from": "[?M.Cholodenko] [Перевод] [?М. Холоденко]\r\n",
+      "address_to": "Dresden A, Technische Hochsch[ule] [Перевод] Дрезден, Германия, Технический колледж\r\n",
+      "name_to": "R. Ratscheff [Перевод] Р. Рачефф",
+      "date_sent": "19.01.1901",
+      "date_received": "xx.xx.xxxx",
+      "time_period": "Дореволюционные",
+      "country_from": "Российская Империя",
+      "settlement_from": "город Одесса",
+      "country_to": "Германия",
+      "settlement_to": "Саксония, город Дрезден",
+      "original_pic_url_2": null,
+      "lat_from": "46.4873195",
+      "lng_from": "30.7392776",
+      "lat_to": "51.0493286",
+      "lng_to": "13.7381437",
+      "tags": [
+        "Просьба",
+        "Искусство",
+        "Шлю привет"
+      ]
+    }
+  ]
+}
