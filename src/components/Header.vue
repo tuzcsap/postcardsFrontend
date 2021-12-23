@@ -82,9 +82,9 @@ export default {
     // }
   },
   async created() {
-    const citiesToResponse = await ky.get("http://127.0.0.1:8000/cities/to").json();
+    const citiesToResponse = await ky.get("https://fastapi-postcards-backend.azurewebsites.net/cities/to").json();
     this.citiesTo = citiesToResponse.map((city, index) => ({name: city, id: index}));
-    const citiesFromResponse = await ky.get("http://127.0.0.1:8000/cities/from").json();
+    const citiesFromResponse = await ky.get("https://fastapi-postcards-backend.azurewebsites.net/cities/from").json();
     this.citiesFrom = citiesFromResponse.map((city, index) => ({name: city, id: index}));
   }
 }

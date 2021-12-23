@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async updatePostcardList(timePeriod, cityFrom, cityTo) {
-      const uri = `http://127.0.0.1:8000/postcards/filter?time_period=${timePeriod}` +
+      const uri = `https://fastapi-postcards-backend.azurewebsites.net/postcards/filter?time_period=${timePeriod}` +
           (cityFrom ? `&settlement_from=${cityFrom}` : '') +
           (cityTo ? `&settlement_to=${cityTo}` : '');
       const encoded = encodeURI(uri);
