@@ -1,8 +1,8 @@
 <template>
   <div class="nav">
-    <div class="dlist">
+    <div class="dlist frame">
       <select class="form-control" @change="cityFrom($event)">
-        <option value="" selected disabled>Откуда</option>
+        <option value="" selected disabled>Откуда  &#9662;</option>
         <option v-for="city in citiesFrom" :value="city.id" :key="city.id">{{ city.name }}</option>
       </select>
     </div>
@@ -12,23 +12,23 @@
 <!--        item-text="name"-->
 <!--        item-value="name">-->
 <!--    </v-select>-->
-    <div class="dlist">
+    <div class="dlist frame">
       <select class="form-control" @change="cityTo($event)">
-        <option value="" selected disabled>Куда</option>
+        <option value="" selected disabled>Куда  &#9662;</option>
         <option v-for="city in citiesTo" :value="city.id" :key="city.id">{{ city.name }}</option>
       </select>
     </div>
-    <div class="dlist">
+    <div class="dlist frame">
       <select class="form-control" @change="timePeriod($event)">
-        <option value="" selected disabled>Период времени</option>
+        <option value="" selected disabled>Период времени  &#9662;</option>
         <option v-for="perio in period" :value="perio.id" :key="perio.id">{{ perio.name }}</option>
       </select>
     </div>
-    <div class="dlist">
+    <div class="dlist timeline">
       <div class="range-input">
-        <input type="range" min="1" max="100" value="1" step="10">
+        <input type="range" min="1" max="21" value="0" step="1">
         <div class="value">
-          <div></div>
+          <div>Выберите век</div>
         </div>
       </div>
     </div>
@@ -36,12 +36,14 @@
 <!--          'Дореволюционные')"-->
 <!--    >Сбросить-->
 <!--    </v-btn>-->
-    <v-btn @click="$emit('updatePostcardList',
+    <div class="dlist-search">
+      <v-btn @click="$emit('updatePostcardList',
           selectedPeriod,
           selectedCityFrom,
           selectedCityTo)"
-    >Найти
-    </v-btn>
+      >Найти
+      </v-btn>
+    </div>
   </div>
 
 </template>
@@ -106,13 +108,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 .nav {
-  background-color: #f6ffed;
+  background-color: #f4ebdb;
   overflow: hidden
 }
+
+.frame{
+  border: 0px solid #8e9b97; 
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+
 
 .dlist {
   float: left;
@@ -121,14 +129,32 @@ export default {
   text-aling: center;
   font-size: 17px;
   text-decoration: none;
-  margin-right: 5px
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.timeline{
+  margin-top: 0.5%
+}
+
+.dlist-search {
+  float: right;
+  color: #f2f2f2f2;
+  padding: 14px 16px;
+  text-aling: center;
+  font-size: 17px;
+  text-decoration: none;
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 1.5%
 }
 
 .range-input input {
   -webkit-appearance:none;
   width:200px;
   height:2px;
-  background:#4471ef;
+  background:#2c4a52;
   border:none;
   outline:none;
 }
@@ -137,14 +163,14 @@ export default {
   width:20px;
   height:20px;
   background:#eee;
-  border:2px solid #4471ef;
+  border:2px solid #2c4a52;
   border-radius:50%;
 }
 .range-input input::-webkit-slider-thumb:hover {
-  background:#4471ef;
+  background:#2c4a52;
 }
 .range-input .value {
-  color:#4471ef;
+  color:#2c4a52;
   text-align:center;
   font-weight:600;
   line-height:40px;
