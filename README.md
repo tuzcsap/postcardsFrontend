@@ -1,5 +1,7 @@
-# postcardsfrontend
+# postcardsfrontend 
+Demo: [hosted on netlify](https://master--soft-fudge-b0e3ee.netlify.app) !Temporary broken due to MongoDB Atlas restrictions for russian IP
 
+Temporary workaround: [ngrok tunnel to localhost](http://4b42-109-234-39-83.ngrok.io)
 ## Project setup
 ```
 npm install
